@@ -18,6 +18,15 @@ class Config(object):
     STRIPE_PUBLISHABLE_KEY = os.getenv('STRIPE_PUBLISHABLE_KEY', None )
     SERVER_ADDRESS         = os.getenv('SERVER_ADDRESS', 'http://localhost:5000/')
 
+
+    MAIL_SERVER   = os.getenv('MAIL_SERVER')
+    MAIL_PORT     = os.getenv('MAIL_PORT')
+
+    # Mail Authentication
+    MAIL_USERNAME = os.getenv('MAIL_USERNAME')
+    MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
+    MAIL_USE_TLS  = True
+
     MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER')
 
     STRIPE_IS_ACTIVE = False
