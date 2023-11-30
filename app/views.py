@@ -435,7 +435,7 @@ def send_email(to, subject, message):
         print('Error sending email: ' + str( e))
         return False, str( e )
 
-@app.route('/contact-us/', methods=['POST'])
+@app.route('/contact/', methods=['POST'])
 def contact():
 
     msg = None
