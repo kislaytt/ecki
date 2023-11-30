@@ -60,7 +60,7 @@ def send_email(to, subject, message):
         print('Error sending email: ' + str( e))
         return False, str( e )
 
-@app.route('/contact/', methods=['GET', 'POST'])
+@app.route('/contact-us/', methods=['GET', 'POST'])
 def contact():
 
     msg = None
