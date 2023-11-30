@@ -36,6 +36,52 @@ stripe_keys = {
 
 stripe.api_key = stripe_keys["secret_key"]
 
+from flask_mail import Message
+default_sender = Config.MAIL_DEFAULT_SENDER
+
+
+def send_email(to, subject, message):
+    
+    try:
+
+        msg = Message(
+            subject,
+            body=message,
+            recipients=[to],
+            sender=default_sender
+            )
+        
+        mail.send(msg)
+
+        return True, None
+    
+    except Exception as e:
+
+        print('Error sending email: ' + str( e))
+        return False, str( e )
+
+@app.route('/contact/', methods=['GET', 'POST'])
+def contact():
+
+    msg = None
+
+    if flask.request.method == 'POST':
+
+        contact_name  = request.form.get('full_name')
+        contact_email = request.form.get('email')
+        contact_msg   = request.form.get('message') 
+
+        status, error = send_email(contact_email, 'Mail from: ' + contact_name, contact_msg)
+
+        if status:
+            msg = 'Message sent'
+            return 'SEND'
+        else:
+            msg = 'Error: ' + error 
+            return 'ERROR'
+        
+
+    return render_template('templates/pages/contact-us.html', msg=msg)
 
 
 
@@ -411,49 +457,3 @@ def is_logged_in():
 
 
 
-from flask_mail import Message
-default_sender = Config.MAIL_DEFAULT_SENDER
-
-
-def send_email(to, subject, message):
-    
-    try:
-
-        msg = Message(
-            subject,
-            body=message,
-            recipients=[to],
-            sender=default_sender
-            )
-        
-        mail.send(msg)
-
-        return True, None
-    
-    except Exception as e:
-
-        print('Error sending email: ' + str( e))
-        return False, str( e )
-
-@app.route('/contact/', methods=['GET', 'POST'])
-def contact():
-
-    msg = None
-
-    if flask.request.method == 'POST':
-
-        contact_name  = request.form.get('full_name')
-        contact_email = request.form.get('email')
-        contact_msg   = request.form.get('message') 
-
-        status, error = send_email(contact_email, 'Mail from: ' + contact_name, contact_msg)
-
-        if status:
-            msg = 'Message sent'
-            return 'SEND'
-        else:
-            msg = 'Error: ' + error 
-            return 'ERROR'
-        
-
-    return render_template('templates/pages/contact-us.html', msg=msg)
