@@ -449,9 +449,11 @@ def contact():
         status, error = send_email(contact_email, 'Mail from: ' + contact_name, contact_msg)
 
         if status:
-            msg = 'Message sent.'
+            msg = 'Message sent'
+            return 'SEND'
         else:
             msg = 'Error: ' + error 
-        print(msg)
+            return 'ERROR'
+        
 
     return render_template('templates/pages/contact-us.html', msg=msg)
