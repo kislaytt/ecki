@@ -17,7 +17,7 @@ from flask   import render_template, request, jsonify, redirect, g, url_for
 from jinja2  import TemplateNotFound
 from flask_login import login_required, logout_user, current_user, login_user
 from functools import wraps
-
+from flask import Flask, redirect
 from app.models import User
 from . import db
 
@@ -75,10 +75,10 @@ def contact():
 
         if status:
             msg = 'Message sent'
-            return 'SEND'
+            return redirect("/")
         else:
             msg = 'Error: ' + error 
-            return 'ERROR'
+            return redirect("/")
         
 
     return render_template('pages/contact-us.html', msg=msg)
