@@ -453,4 +453,4 @@ def contact():
         else:
             msg = 'Error: ' + error 
 
-    return render_template('contact/send-message.html', msg=msg)
+    return render_template('templates/pages/contact-us.html', msg=msg)
