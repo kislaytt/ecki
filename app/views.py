@@ -7,7 +7,12 @@ import os, json
 import base64
 import sqlite3
 import sqlite3 as sql
+import flask
+from jinja2 import TemplateNotFound
 
+from apps import mail
+from apps.home import blueprint
+from apps.config import Config
 
 
 
@@ -407,3 +412,29 @@ def is_logged_in():
     if current_user.is_authenticated:
         return True
     return False
+
+
+
+from flask_mail import Message
+default_sender = Config.MAIL_DEFAULT_SENDER
+
+@app.route('/contact-us/', methods=['GET', 'POST'])
+def send_email(to, subject, message):
+    
+    try:
+
+        msg = Message(
+            subject,
+            body=message,
+            recipients=[to],
+            sender=default_sender
+            )
+        
+        mail.send(msg)
+
+        return True, None
+    
+    except Exception as e:
+
+        print('Error sending email: ' + str( e))
+        return False, str( e )
