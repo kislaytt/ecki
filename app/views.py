@@ -414,7 +414,7 @@ def is_logged_in():
 from flask_mail import Message
 default_sender = Config.MAIL_DEFAULT_SENDER
 
-@app.route('/contact-us/', methods=['GET', 'POST'])
+
 def send_email(to, subject, message):
     
     try:
@@ -434,3 +434,23 @@ def send_email(to, subject, message):
 
         print('Error sending email: ' + str( e))
         return False, str( e )
+
+@app.route('/contact-us/', methods=['GET', 'POST'])
+def contact():
+
+    msg = None
+
+    if flask.request.method == 'POST':
+
+        contact_name  = request.form.get('full_name')
+        contact_email = request.form.get('email')
+        contact_msg   = request.form.get('message') 
+
+        status, error = send_email(contact_email, 'Mail from: ' + contact_name, contact_msg)
+
+        if status:
+            msg = 'Message sent.'
+        else:
+            msg = 'Error: ' + error 
+
+    return render_template('contact/send-message.html', msg=msg)
