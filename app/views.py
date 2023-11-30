@@ -10,10 +10,6 @@ import sqlite3 as sql
 import flask
 from jinja2 import TemplateNotFound
 
-from app import mail
-from app.home import blueprint
-from app.config import Config
-
 
 
 # Flask modules
