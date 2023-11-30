@@ -81,7 +81,7 @@ def contact():
             return 'ERROR'
         
 
-    return render_template('templates/pages/contact-us.html', msg=msg)
+    return render_template('pages/contact-us.html', msg=msg)
 
 
 
