@@ -9,7 +9,7 @@ import sqlite3
 import sqlite3 as sql
 import flask
 from jinja2 import TemplateNotFound
-
+from app import Config
 
 
 # Flask modules
